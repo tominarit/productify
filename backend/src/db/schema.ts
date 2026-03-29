@@ -2,12 +2,15 @@ import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 import { desc, relations } from "drizzle-orm"
 
 export const users = pgTable("users", {
-  id: text("id").primaryKey(),
+  id: text("id").primaryKey(), // clerkId
   email: text("email").notNull().unique(),
   name: text("name"),
-  imageURL: text("image_url"),
+  imageUrl: text("image_url"),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" })
+    .notNull()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 });
 
 export const products = pgTable("products", {
